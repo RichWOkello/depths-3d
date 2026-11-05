@@ -4,7 +4,7 @@ const wrap=document.getElementById('dd3d-root');
 const hud=wrap.querySelector('.hud'), mm=wrap.querySelector('.mm'), mctx=mm.getContext('2d');
 const hpb=wrap.querySelector('.hpb'), flash=wrap.querySelector('.flash');
 const ov=wrap.querySelector('.ov'), toastEl=wrap.querySelector('.toast');
-const VERSION='1.1.0';
+const VERSION='2.0.0';
 const VW=800, VH=500, CELL=4, WALLH=3.2;
 
 // ---------- renderer / scene ----------
@@ -80,9 +80,18 @@ let state='ready', paused=false;
 let level=1, grid=null, GW=0, GH=0, explored=null;
 let levelGroup=null, portal=null, portalOpen=false, exitCell=[1,1];
 let enemies=[], pickups=[], orbs=[], fx=[], totalEnemies=0, killsThisLevel=0;
-const P={x:0,z:0,yaw:0,hp:100,maxhp:100,ammo:60,score:0,cool:0,kills:0,r:0.4};
+const P={x:0,z:0,yaw:0,hp:100,maxhp:100,ammo:60,score:0,cool:0,kills:0,r:0.4,wi:0};
 let muzzle=0, recoil=0, walkT=0, flashA=0, time=0;
 const keys={};
+const WEAPONS=[
+ {n:'Pistol',cd:.28,cost:1,dmg:2,pel:1,spr:.01,pierce:false,col:0x8a8fa0,len:1,d:'Accurate and cheap'},
+ {n:'Shotgun',cd:.8,cost:3,dmg:1.3,pel:8,spr:.14,pierce:false,col:0xa0663a,len:.9,d:'8 pellets. Deadly up close'},
+ {n:'SMG',cd:.07,cost:1,dmg:1,pel:1,spr:.05,pierce:false,col:0x4a90e2,len:1.1,d:'Rapid fire'},
+ {n:'Railgun',cd:1.1,cost:6,dmg:9,pel:1,spr:0,pierce:true,col:0x33e0ff,len:1.4,d:'Pierces every enemy in line'}];
+const DIFF={Easy:{d:.7,c:.8},Normal:{d:1,c:1},Hard:{d:1.4,c:1.3}};
+let startW=0, difficulty='Normal', menuKind='main';
+function setWeapon(i){ P.wi=i; gun.material.color.set(WEAPONS[i].col); gun.scale.z=WEAPONS[i].len; toast(WEAPONS[i].n,700); }
+function wbar(){ return WEAPONS.map(function(w,i){ return '<span style="padding:1px 6px;border-radius:4px;margin-right:3px;background:'+(i===P.wi?'#ffd23a;color:#000':'#0008')+'">'+(i+1)+' '+w.n+'</span>'; }).join(''); }
 let best=0;
 try{ best=parseInt(localStorage.getItem('depths3d_best'),10)||0; }catch(e){}
 function saveBest(){
@@ -218,7 +227,7 @@ function buildLevel(){
   }
   const pick=a=>a.splice(Math.floor(Math.random()*a.length),1)[0];
 
-  const normal=Math.min(26,4+level*2);
+  const normal=Math.min(30,Math.round((4+level*2)*DIFF[difficulty].c));
   if(level%5===0&&far.length){ const bc=pick(far), bp=cellCenter(bc); addEnemy('boss',bp[0],bp[1]); }
   for(let i=0;i<normal&&far.length;i++){
     const c=pick(far), p=cellCenter(c), r=Math.random();
@@ -234,6 +243,37 @@ function buildLevel(){
   for(let i=0;i<ng&&all.length;i++){const p=cellCenter(pick(all)); addPickup('gem',p[0],p[1]);}
 }
 
+function buildMonster(type,mat){
+  const g=new THREE.Group();
+  const S=function(r){return new THREE.SphereGeometry(r,10,10);};
+  const X=function(geo,col,em){return new THREE.Mesh(geo,new THREE.MeshStandardMaterial({color:col,emissive:em||0,flatShading:true}));};
+  const add=function(m,x,y,z,rx,rz){m.position.set(x,y,z); if(rx) m.rotation.x=rx; if(rz) m.rotation.z=rz; g.add(m); return m;};
+  const eyes=function(y,z,s,c){[-1,1].forEach(function(k){add(X(S(s),c,c),k*s*1.9,y,z);});};
+  const horns=function(y,sp,h,col){[-1,1].forEach(function(k){add(X(new THREE.ConeGeometry(h*0.25,h,6),col),k*sp,y,0.05,0,-k*0.35);});};
+  if(type==='chaser'){ // imp
+    const b=add(new THREE.Mesh(S(0.5),mat),0,0,0); b.scale.y=1.2;
+    add(new THREE.Mesh(S(0.3),mat),0,0.8,0.1); horns(1.15,0.18,0.35,0x2a0a0a); eyes(0.85,0.36,0.06,0xffee33);
+    [-1,1].forEach(function(k){ add(X(new THREE.CylinderGeometry(0.07,0.07,0.7,6),0xaa2222),k*0.55,0.05,0.25,-1.1);
+      add(X(new THREE.ConeGeometry(0.06,0.22,5),0xffe9a0),k*0.55,-0.12,0.6,1.57); });
+  } else if(type==='shooter'){ // floating eye-demon
+    add(new THREE.Mesh(S(0.7),mat),0,0,0);
+    add(X(S(0.4),0xf4f4f4,0x555555),0,0.1,0.5); add(X(S(0.19),0x110011),0,0.1,0.86); add(X(S(0.07),0xff2222,0xff2222),0.05,0.14,1.03);
+    horns(0.7,0.3,0.4,0x3a1060);
+    for(let i=0;i<5;i++){ const a=i*1.256; add(X(new THREE.CylinderGeometry(0.08,0.03,0.9,6),0x7a30b0),Math.cos(a)*0.38,-0.85,Math.sin(a)*0.38); }
+  } else if(type==='brute'){ // ogre
+    add(new THREE.Mesh(new THREE.BoxGeometry(1.1,1.2,0.8),mat),0,0,0);
+    add(X(new THREE.BoxGeometry(0.55,0.45,0.5),0x7a4a22),0,0.95,0.1); eyes(1.0,0.37,0.07,0xff3030);
+    [-1,1].forEach(function(k){ add(X(new THREE.BoxGeometry(0.36,1.1,0.36),0x8a5a2a),k*0.78,-0.1,0.1);
+      add(X(new THREE.BoxGeometry(0.4,0.8,0.4),0x5a3a1a),k*0.3,-1.0,0); add(X(new THREE.ConeGeometry(0.06,0.25,5),0xfff2cc),k*0.15,0.78,0.42,1.4); });
+  } else { // boss demon lord
+    const b=add(new THREE.Mesh(S(1.1),mat),0,0,0); b.scale.y=1.25;
+    add(new THREE.Mesh(S(0.55),mat),0,1.5,0.15); horns(2.05,0.4,0.95,0x220000); eyes(1.58,0.62,0.1,0xffff33);
+    [-1,1].forEach(function(k){ add(X(new THREE.BoxGeometry(1.9,0.07,1.2),0x5a0a1a,0x300008),k*1.6,0.7,-0.5,0,k*0.45);
+      add(X(new THREE.CylinderGeometry(0.2,0.2,1.3,7),0xaa1144),k*1.2,-0.2,0.4,-0.9); });
+  }
+  return g;
+}
+
 function addEnemy(type,x,z){
   const s=1+0.1*(level-1);
   let col,geo,hp,speed,r,dmg,y;
@@ -242,7 +282,7 @@ function addEnemy(type,x,z){
   else if(type==='boss'){col=0xff2288;geo=new THREE.IcosahedronGeometry(1.4);hp=45;speed=2.1;r=1.0;dmg=26;y=1.9;}
   else {col=0xff9a2a;geo=new THREE.DodecahedronGeometry(1.0);hp=14;speed=2.2;r=0.85;dmg=22;y=1.4;}
   const mat=new THREE.MeshStandardMaterial({color:col,emissive:col,emissiveIntensity:0.6,flatShading:true});
-  const mesh=new THREE.Mesh(geo,mat);
+  const mesh=buildMonster(type,mat);
   mesh.position.set(x,y,z); levelGroup.add(mesh);
   const e={type:type,x:x,z:z,hp:Math.ceil(hp*s),maxhp:Math.ceil(hp*s),speed:speed,r:r,dmg:dmg*s,
     mesh:mesh,mat:mat,baseCol:col,baseY:y,alert:false,cool:1+Math.random(),ph:Math.random()*6,hit:0,hr:type==='boss'?1.5:(type==='brute'?1.0:0.7)};
@@ -275,10 +315,11 @@ function tracer(x0,y0,z0,x1,y1,z1){
 // ---------- combat ----------
 function hurt(a){
   if(state!=='playing') return;
+  a*=DIFF[difficulty].d;
   P.hp-=a; flashA=Math.min(0.55,flashA+0.12+a*0.01);
   if(P.hp<=0){
     P.hp=0; state='dead'; saveBest(); beep(160,0.6,'sawtooth',0.08,-100);
-    showOverlay('YOU DIED','Reached level '+level+' &nbsp;·&nbsp; Score '+P.score+' &nbsp;·&nbsp; Kills '+P.kills+'<br>Best score: <b>'+best+'</b><br><br>Press <b>R</b> or click to try again');
+    showMenu('dead');
   }
 }
 function killEnemy(e){
@@ -302,28 +343,30 @@ function killEnemy(e){
 }
 function shoot(){
   if(state!=='playing'||P.cool>0) return;
-  if(P.ammo<=0){ beep(90,0.08,'square',0.04); P.cool=0.25; return; }
-  P.ammo--; P.cool=0.17; muzzle=0.06; recoil=0.12;
-  beep(780,0.09,'square',0.05,-500);
-  const dx=-Math.sin(P.yaw), dz=-Math.cos(P.yaw);
-  let hitE=null, end=40;
-  for(let t=0.4;t<40;t+=0.25){
-    const x=P.x+dx*t, z=P.z+dz*t;
-    if(solid(x,z)){ end=t; break; }
-    for(const e of enemies){
-      if(Math.hypot(e.x-x,e.z-z)<e.hr){ hitE=e; end=t; break; }
-    }
-    if(hitE) break;
-  }
+  const w=WEAPONS[P.wi];
+  if(P.ammo<w.cost){ beep(90,0.08,'square',0.04); P.cool=0.25; toast('Not enough ammo for the '+w.n,900); return; }
+  P.ammo-=w.cost; P.cool=w.cd; muzzle=0.06; recoil=w.pierce?0.25:(w.pel>1?0.2:0.1);
+  beep(w.pierce?200:(w.pel>1?140:780),0.1,w.pierce?'sawtooth':'square',0.05,-100);
   const rx=Math.cos(P.yaw), rz=-Math.sin(P.yaw);
-  tracer(P.x+rx*0.3+dx*0.6,1.4,P.z+rz*0.3+dz*0.6, P.x+dx*end,1.5,P.z+dz*end);
-  if(hitE){
-    const crit=Math.random()<0.1, dmg=crit?4:2;
-    hitE.hp-=dmg; hitE.hit=0.1; hitE.alert=true;
-    burst(P.x+dx*end,1.4,P.z+dz*end,0xffffff,5,3);
-    if(hitE.hp<=0) killEnemy(hitE); else beep(220,0.05,'triangle',0.05);
-  } else {
-    burst(P.x+dx*end,1.4,P.z+dz*end,0xffcc66,4,2);
+  for(let p=0;p<w.pel;p++){
+    const a=P.yaw+(Math.random()-0.5)*2*w.spr, dx=-Math.sin(a), dz=-Math.cos(a), hits=[];
+    let end=40;
+    for(let t=0.4;t<40;t+=0.25){
+      const x=P.x+dx*t, z=P.z+dz*t;
+      if(solid(x,z)){ end=t; break; }
+      let stop=false;
+      for(const e of enemies){
+        if(hits.indexOf(e)<0&&Math.hypot(e.x-x,e.z-z)<e.hr){ hits.push(e); if(!w.pierce){ end=t; stop=true; break; } }
+      }
+      if(stop) break;
+    }
+    tracer(P.x+rx*0.3+dx*0.6,1.4,P.z+rz*0.3+dz*0.6, P.x+dx*end,1.5,P.z+dz*end);
+    if(!hits.length) burst(P.x+dx*end,1.4,P.z+dz*end,0xffcc66,3,2);
+    for(const e of hits){
+      e.hp-=w.dmg*(Math.random()<0.1?2:1); e.hit=0.1; e.alert=true;
+      burst(e.x,e.baseY,e.z,0xffffff,4,3);
+      if(e.hp<=0) killEnemy(e); else beep(220,0.05,'triangle',0.05);
+    }
   }
 }
 
@@ -350,7 +393,7 @@ function update(dt){
     const visible=d<22&&los(e.x,e.z,P.x,P.z);
     if(!e.alert&&visible&&d<20) e.alert=true;
     e.mesh.position.set(e.x,e.baseY+Math.sin(time*3+e.ph)*0.15,e.z);
-    e.mesh.rotation.y+=dt*1.6; e.mesh.rotation.x+=dt*0.7;
+    e.mesh.rotation.y=Math.atan2(dx,dz);
     if(e.hit>0){ e.hit-=dt; e.mat.emissive.set(0xffffff); e.mat.emissiveIntensity=1.2; }
     else { e.mat.emissive.set(e.baseCol); e.mat.emissiveIntensity=e.alert?0.9:0.35; }
     if(!e.alert) continue;
@@ -440,7 +483,7 @@ function render(){
   // HUD
   hud.innerHTML='<b>Level '+level+'</b> &nbsp; Score '+P.score+' &nbsp; <span style="opacity:.7">Best '+Math.max(best,P.score)+'</span><br>Kills '+killsThisLevel+'/'+totalEnemies+
     ' &nbsp; Ammo <b style="color:'+(P.ammo<8?'#ff6b6b':'#ffd23a')+'">'+P.ammo+'</b><br>Portal: '+
-    (portalOpen?'<span style="color:#33e0ff">OPEN</span>':'<span style="color:#ff5566">sealed</span>');
+    (portalOpen?'<span style="color:#33e0ff">OPEN</span>':'<span style="color:#ff5566">sealed</span>')+'<br>'+wbar();
   hpb.style.width=(100*P.hp/P.maxhp)+'%';
   hpb.style.background=P.hp<30?'#e0455a':'#3ddc84';
   // minimap
@@ -466,37 +509,63 @@ function render(){
 }
 
 // ---------- overlay / flow ----------
-function showOverlay(title,html){
-  ov.innerHTML='<div style="font-size:30px;font-weight:bold;margin-bottom:8px">'+title+'</div><div style="font-size:14px;line-height:1.6">'+html+'</div>';
-  ov.style.display='flex';
-}
 function hideOverlay(){ ov.style.display='none'; }
+const BTN='display:inline-block;padding:10px 26px;border-radius:8px;font-weight:bold;cursor:pointer;margin:4px;border:1px solid #ffffff40;';
+function btn(a,label,bg){ return '<span data-a="'+a+'" style="'+BTN+'background:'+bg+'">'+label+'</span>'; }
+function showMenu(kind){
+  menuKind=kind;
+  try{ if(document.exitPointerLock) document.exitPointerLock(); }catch(e){}
+  let h='<div style="font-size:36px;font-weight:800;letter-spacing:4px;color:#ffd23a;text-shadow:0 0 18px #ff8a2a">DEPTHS 3D</div>'+
+    '<div style="font-size:12px;opacity:.6;margin-bottom:8px">v'+VERSION+' · by Richard Okello · Best score '+best+'</div>';
+  if(kind==='pause'){
+    h+='<div style="font-size:22px;margin:8px 0 12px">PAUSED</div>'+btn('resume','▶ Resume','#2f8f5b')+btn('play','↻ Restart','#444')+btn('menu','☰ Main menu','#444');
+  } else {
+    if(kind==='dead') h+='<div style="font-size:22px;color:#ff6b7f;font-weight:bold">YOU DIED</div><div style="font-size:14px;margin:2px 0 6px">Level '+level+' · Score '+P.score+' · Kills '+P.kills+'</div>';
+    h+='<div style="font-size:12px;opacity:.7;margin-top:4px">CHOOSE YOUR STARTING WEAPON</div><div style="display:flex;justify-content:center;flex-wrap:wrap">';
+    WEAPONS.forEach(function(w,i){
+      const c='#'+w.col.toString(16).padStart(6,'0');
+      h+='<div data-a="wpn:'+i+'" style="width:118px;padding:8px;margin:4px;border-radius:8px;cursor:pointer;text-align:left;font-size:11px;line-height:1.4;background:#ffffff12;border:2px solid '+(i===startW?'#ffd23a':'#ffffff30')+'"><b style="font-size:14px;color:'+c+'">'+(i+1)+' · '+w.n+'</b><br>'+w.d+'<br><span style="opacity:.7">DMG '+w.dmg+(w.pel>1?'×'+w.pel:'')+' · AMMO '+w.cost+'</span></div>';
+    });
+    h+='</div><div style="font-size:12px;opacity:.7;margin-top:4px">DIFFICULTY</div><div>';
+    Object.keys(DIFF).forEach(function(k){ h+=btn('diff:'+k,k,k===difficulty?'#c27a1a':'#333'); });
+    h+='</div><div style="margin-top:6px">'+btn('play',kind==='dead'?'↻ Try again':'▶ PLAY','#2f8f5b')+(kind==='dead'?btn('menu','☰ Menu','#444'):'')+'</div>';
+  }
+  h+='<div style="font-size:11px;opacity:.6;margin-top:10px;line-height:1.5">W A S D move · ← → or Q E turn · Space / F / click fire · 1–4 or wheel switch gun · P pause</div>';
+  ov.innerHTML=h; ov.style.display='flex';
+}
 function newGame(){
-  level=1; P.hp=P.maxhp=100; P.ammo=60; P.score=0; P.kills=0; P.cool=0; flashA=0;
-  buildLevel(); state='playing'; paused=false; hideOverlay();
+  level=1; P.hp=P.maxhp=100; P.ammo=70; P.score=0; P.kills=0; P.cool=0; flashA=0;
+  buildLevel(); setWeapon(startW); state='playing'; paused=false; hideOverlay();
   toast('Find the portal. Kill half the dungeon to open it.',3000);
 }
-const HELP='<b>W A S D</b> move &nbsp; <b>← →</b> or <b>Q E</b> turn &nbsp; <b>Shift</b> sprint<br><b>Space</b> / <b>F</b> / left-click fire &nbsp; <b>hold right-click + drag</b> to look &nbsp; <b>P</b> pause<br>Kill half the enemies to open the cyan portal, then reach it.<br><br><b>Click to play</b>';
-showOverlay('🏰 DEPTHS 3D <span style="font-size:13px;opacity:.6">v'+VERSION+'</span>',HELP+'<br><span style="opacity:.6">Best score: '+best+'</span>');
-
-function activate(){
-  wrap.focus();
+function activate(){ if(state==='ready'||state==='dead'){ newGame(); wrap.focus(); } }
+ov.addEventListener('mousedown',function(ev){ ev.stopPropagation(); });
+ov.addEventListener('click',function(ev){
+  const t=ev.target.closest('[data-a]'); if(!t) return;
+  const a=t.getAttribute('data-a').split(':');
   if(!actx){ try{ actx=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} }
-  if(state==='ready'||state==='dead') newGame();
-  else if(paused){ paused=false; hideOverlay(); }
-}
+  if(a[0]==='wpn'){ startW=+a[1]; showMenu(menuKind); }
+  else if(a[0]==='diff'){ difficulty=a[1]; showMenu(menuKind); }
+  else if(a[0]==='play'){ newGame(); wrap.focus(); }
+  else if(a[0]==='resume'){ paused=false; hideOverlay(); wrap.focus(); }
+  else if(a[0]==='menu'){ state='ready'; paused=false; showMenu('main'); }
+});
+showMenu('main');
 wrap.addEventListener('mousedown',function(ev){
   if(ev.button===2){ keys.look=true; ev.preventDefault(); return; }
-  if(state==='playing'&&!paused) keys.mouse=true; else activate();
-  if(state==='playing'&&!paused){
-    wrap.focus();
-    try{
-      if(document.pointerLockElement!==renderer.domElement&&renderer.domElement.requestPointerLock){
-        const pr=renderer.domElement.requestPointerLock();
-        if(pr&&pr.catch) pr.catch(function(){});
-      }
-    }catch(e){}
-  }
+  if(state!=='playing'||paused) return;
+  keys.mouse=true; wrap.focus();
+  try{
+    if(document.pointerLockElement!==renderer.domElement&&renderer.domElement.requestPointerLock){
+      const pr=renderer.domElement.requestPointerLock(); if(pr&&pr.catch) pr.catch(function(){});
+    }
+  }catch(e){}
+});
+wrap.addEventListener('wheel',function(ev){
+  if(state==='playing'&&!paused){ setWeapon((P.wi+(ev.deltaY>0?1:3))%4); ev.preventDefault(); }
+},{passive:false});
+document.addEventListener('pointerlockchange',function(){
+  if(!document.pointerLockElement&&state==='playing'&&!paused){ paused=true; showMenu('pause'); }
 });
 window.addEventListener('mouseup',function(ev){ if(ev.button===2) keys.look=false; else keys.mouse=false; });
 wrap.addEventListener('contextmenu',function(ev){ev.preventDefault();});
@@ -505,17 +574,18 @@ wrap.addEventListener('mousemove',function(ev){
 });
 wrap.addEventListener('keydown',function(ev){
   keys[ev.code]=true;
+  if(/^Digit[1-4]$/.test(ev.code)&&state==='playing'&&!paused) setWeapon(+ev.code[5]-1);
   if(['Space','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].indexOf(ev.code)>=0) ev.preventDefault();
   if(ev.code==='KeyR'&&(state==='dead'||state==='ready')) activate();
   if((ev.code==='KeyP'||ev.code==='Escape')&&state==='playing'){
     if(paused){ paused=false; hideOverlay(); }
-    else { paused=true; showOverlay('PAUSED','Press <b>P</b> or click to resume'); }
+    else { paused=true; showMenu('pause'); }
   }
 });
 wrap.addEventListener('keyup',function(ev){ keys[ev.code]=false; });
 wrap.addEventListener('blur',function(){
   for(const c in keys) keys[c]=false;
-  if(state==='playing'&&!paused){ paused=true; showOverlay('PAUSED','Click to resume'); }
+  if(state==='playing'&&!paused){ paused=true; showMenu('pause'); }
 });
 
 // initial dummy level so the scene renders behind the title
@@ -531,12 +601,22 @@ function loop(now){
 requestAnimationFrame(loop);
 }
 
+function fail(){
+  document.getElementById('dd3d-root').innerHTML='<div style="padding:20px;color:#f88;line-height:1.6">Could not load three.js from the CDN.<br>Check your internet connection, then reload the page (or re-run the Colab cell).</div>';
+}
+function loadScript(urls){
+  if(!urls.length){ fail(); return; }
+  const s=document.createElement('script');
+  s.src=urls[0];
+  s.onload=function(){ if(window.THREE) start(); else loadScript(urls.slice(1)); };
+  s.onerror=function(){ loadScript(urls.slice(1)); };
+  document.head.appendChild(s);
+}
 if(window.THREE){ start(); }
 else {
-  const s=document.createElement('script');
-  s.src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
-  s.onload=start;
-  s.onerror=function(){ document.getElementById('dd3d-root').innerHTML='<div style="padding:20px;color:#f88">Could not load three.js from the CDN. Check your internet connection and re-run this cell.</div>'; };
-  document.head.appendChild(s);
+  loadScript([
+    'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js',
+    'https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js'
+  ]);
 }
 })();

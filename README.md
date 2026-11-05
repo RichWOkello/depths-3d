@@ -3,16 +3,17 @@
 A first-person 3D dungeon shooter built with **Three.js**. Play it in your browser, or run it inside **Google Colab**. Nothing to install.
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/RichWOkello/depths-3d/blob/main/depths_3d.ipynb)
-![version](https://img.shields.io/badge/version-1.1.0-blue)
+![version](https://img.shields.io/badge/version-2.0.0-blue)
 ![license](https://img.shields.io/badge/license-MIT-green)
 
 ## Play
 
 | Option | How |
 |---|---|
-| **In the browser** | Open **https://richwokello.github.io/depths-3d/** (see *Enable GitHub Pages* below) |
+| **Easiest: on your computer** | Download or clone this repo and **double-click `index.html`**. No server needed. |
 | **In Colab** | Click the **Open In Colab** badge, run the cell, then click the game |
-| **Locally** | Run `python -m http.server` in this folder and open http://localhost:8000 |
+| **On the web** | Enable GitHub Pages (steps below), then open **https://richwokello.github.io/depths-3d/** |
+| **Local server (optional)** | In this folder run `py -m http.server 8000` (Windows) or `python3 -m http.server 8000` (Mac/Linux), then open http://localhost:8000 |
 
 > The game loads Three.js from a CDN, so it needs an internet connection.
 
@@ -23,6 +24,7 @@ A first-person 3D dungeon shooter built with **Three.js**. Play it in your brows
 | W A S D | Move (hold **Shift** to sprint) |
 | ← → or Q E | Turn |
 | Space / F / left-click | Fire |
+| 1 2 3 4 or mouse wheel | Switch weapon (Pistol, Shotgun, SMG, Railgun) |
 | Right-click + drag | Mouse look (in the standalone page, left-click also captures the mouse) |
 | P / Esc | Pause |
 | R | Restart after death |
@@ -31,14 +33,15 @@ A first-person 3D dungeon shooter built with **Three.js**. Play it in your brows
 
 - Every floor is a freshly generated maze that gets bigger and deadlier.
 - Kill **half the enemies** to open the cyan portal, then reach it to descend.
-- 🔴 **Chasers** rush you, 🟣 **Shooters** keep their distance and fire orbs, 🟠 **Brutes** (floor 3+) are slow and tough.
+- 3D monsters: 👹 **Imps** rush you, 👁 **Eye-demons** float back and spit orbs, **Ogres** (floor 3+) are slow and tough.
+- Four guns: Pistol, Shotgun, SMG and a piercing Railgun. Pick your starting gun and difficulty in the main menu.
 - 👹 **Every 5th floor is a boss floor**, with a huge enemy that fires triple spreads.
 - Pick up health, ammo and gems. The minimap fills in as you explore.
 - Your **best score** is saved in your browser.
 
-## What's new in v1.1.0
+## What's new
 
-See [CHANGELOG.md](CHANGELOG.md). Highlights: boss floors, saved high score, pause key, mouse capture, and a standalone web version you can host on GitHub Pages.
+See [CHANGELOG.md](CHANGELOG.md). v1.1 highlights: boss floors, saved high score, pause key, mouse capture, and a standalone web version you can host on GitHub Pages.
 
 ## How it works
 
