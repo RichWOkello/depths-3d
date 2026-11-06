@@ -1,5 +1,27 @@
 # Changelog
 
+## [3.0.0] - 2026-11-06
+### Added
+- **Redesigned menu:** gradient title, Play / Stats / Settings tabs, weapon, difficulty and mode pickers.
+- **Perks:** pick 1 of 3 upgrades after every floor.
+- **Two new guns:** Grenade Launcher (splash damage) and Flamethrower (short range, piercing), each with its own model. Six guns total.
+- **New monsters:** teleporters that blink around you, and splitters that burst into minis.
+- **Explosive barrels** that chain-explode and hurt enemies (and you).
+- **Settings:** mouse sensitivity, field of view and volume (saved).
+- **Game modes:** Normal, Hardcore (no respawns) and Daily (seeded dungeon layouts).
+- **Progress:** local top-10 leaderboard, lifetime stats and 6 achievements.
+- **Game feel:** screen shake and floating damage numbers.
+- **Gamepad support** (sticks to move/look, trigger or A to fire, right bumper to switch gun).
+- Includes all v2.1.0 changes (checkpoints, gun models, graphics, combo multiplier).
+
+## [2.1.0] - 2026-11-06
+### Added
+- **Checkpoints:** two glowing shrines per floor. Touch one to save your spot (+40 HP, +10 ammo). Dying lets you respawn at the last checkpoint (or the floor start) instead of restarting the whole run.
+- **Unique gun models:** pistol, double-barrel shotgun, SMG with magazine, and a glowing-ring railgun.
+- **Graphics:** per-floor colour themes, bump-mapped walls, wall-mounted flickering torches, vignette, and sharper rendering on high-DPI screens.
+- **Combo multiplier** for kill streaks, and 3 seconds of protection after respawning.
+- Minimap shows checkpoints.
+
 ## [2.0.0] - 2026-11-05
 ### Added
 - **New menu interface:** main menu, pause menu and game-over menu with weapon cards, difficulty (Easy / Normal / Hard) and clickable buttons.
