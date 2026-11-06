@@ -1,88 +1,120 @@
+<div align="center">
+
 # 🏰 Depths 3D
 
-A first-person 3D dungeon shooter built with **Three.js**. Play it in your browser, or run it inside **Google Colab**. Nothing to install.
+### The Abyssal Expansion · v5.0.0
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/RichWOkello/depths-3d/blob/main/depths_3d.ipynb)
-![version](https://img.shields.io/badge/version-4.0.0-blue)
-![license](https://img.shields.io/badge/license-MIT-green)
+*A first-person dark-fantasy dungeon shooter built with Three.js.*
+
+[![Version](https://img.shields.io/badge/version-5.0.0-D9B17A?style=flat-square)](CHANGELOG.md)
+[![License: MIT](https://img.shields.io/badge/license-MIT-3A8F75?style=flat-square)](LICENSE)
+[![GitHub Pages](https://img.shields.io/badge/play-GitHub%20Pages-242938?style=flat-square&logo=github)](https://richwokello.github.io/depths-3d/)
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/RichWOkello/depths-3d/blob/main/depths_3d.ipynb)
+
+**[Play in browser](https://richwokello.github.io/depths-3d/) · [Launch in Colab](https://colab.research.google.com/github/RichWOkello/depths-3d/blob/main/depths_3d.ipynb) · [Release notes](RELEASE_NOTES.md)**
+
+<img alt="Depths 3D cinematic main menu" src="docs/menu-preview.png" width="800" />
+
+<sub>Menu UI preview captured during browser UI testing; in-game 3D graphics may differ.</sub>
+
+</div>
+
+## Enter the Abyss
+
+Descend through procedurally generated Gothic cathedrals, crypts and forgotten sanctuaries. Fight increasingly dangerous creatures, upgrade your weapons, discover secrets and survive cinematic boss encounters.
+
+**Version 5.0.0** brings together the major combat, graphics, dungeon, AI, animation and menu improvements. The release keeps **eight playable weapon slots**, the existing campaign systems and a single source that builds for desktop browsers, GitHub Pages and Google Colab.
 
 ## Play
 
-| Option | How |
-|---|---|
-| **Easiest: on your computer** | Download or clone this repo and **double-click `index.html`**. No server needed. |
-| **In Colab** | Click the **Open In Colab** badge, run the cell, then click the game |
-| **On the web** | Enable GitHub Pages (steps below), then open **https://richwokello.github.io/depths-3d/** |
-| **Local server (optional)** | In this folder run `py -m http.server 8000` (Windows) or `python3 -m http.server 8000` (Mac/Linux), then open http://localhost:8000 |
+| Platform | How to start |
+| --- | --- |
+| **GitHub Pages** | **[Play here](https://richwokello.github.io/depths-3d/)**. This link will show v5.0.0 **after** the updated files are pushed to `main` and Pages finishes deploying. |
+| **Google Colab** | **[Open notebook](https://colab.research.google.com/github/RichWOkello/depths-3d/blob/main/depths_3d.ipynb)**. Run the game cell, then interact with the game iframe. |
+| **Standalone HTML** | Download this repository and open `PLAY_DIRECTLY.html` in Chrome or Edge. |
+| **Local server** | In the repository folder, run `python -m http.server 8000`, then visit `http://localhost:8000/`. |
 
-> The game loads Three.js from a CDN, so it needs an internet connection.
+You need a WebGL-capable browser and an internet connection to load the pinned **Three.js r128** library. The game does not require a separate game engine installation. Music and sound start following a user interaction due to browser autoplay rules.
+
+## Features
+
+- **Eight weapons:** Desert Eagle, Remington 870, UMP9, AK-86, M79 grenade launcher, M2-style flamethrower, katana and Light Saber.
+- **Action combat:** projectiles, recoil, reloads, stamina-based melee, timed parry, slash trails, weak points and environmental effects.
+- **Dungeon exploration:** rotating Gothic environments, secret passages, environmental hazards, ritual switches, crypt keys, treasure and discoverable objectives.
+- **Enemies and bosses:** different monster behaviors, maze-aware navigation, telegraphed boss attacks and four named boss encounters.
+- **Progression:** upgrades, pickups, inventory, Soul Forge, checkpoints, 20-floor campaign, Survival and New Game+.
+- **Cinematic presentation:** animated intro, atmospheric artwork/audio, compact HUD, first-person hand/weapon models and uncluttered settings-driven menus.
+
+These are **procedural 3D graphics and synthesized sound**, not photogrammetry or professional motion capture. See [feature coverage](FEATURE_MATRIX.md) and the [testing report](TEST_REPORT.md) for what is implemented and verified.
 
 ## Controls
 
-| Key | Action |
-|---|---|
-| W A S D | Move (hold **Shift** to sprint) |
-| ← → or Q E | Turn |
-| Space / F / left-click | Fire |
-| 1 2 3 4 or mouse wheel | Switch weapon (Pistol, Shotgun, SMG, Railgun) |
-| Right-click + drag | Mouse look (in the standalone page, left-click also captures the mouse) |
-| P / Esc | Pause |
-| R | Restart after death |
+| Input | Action | Input | Action |
+| --- | --- | --- | --- |
+| `W A S D` | Move | `Shift` | Sprint |
+| Mouse / `Q E` / arrows | Aim or turn | `1`–`8` / wheel | Switch weapons |
+| Left-click / `Space` / `F` | Fire or slash | `R` | Reload firearm |
+| `G` | Heavy melee strike | `T` | Melee thrust |
+| Hold `C` | Guard / timed parry | `V` | Charged saber wave |
+| `B` | AK fire mode | `Tab` | Weapon selection |
+| `I` | Inventory | `H` | Medkit |
+| `X` | Activate rune switch | `P` / `Esc` | Pause / resume |
 
-## Gameplay
+For other settings and controls, open **Settings → Controls** in the game.
 
-- Every floor is a freshly generated maze that gets bigger and deadlier.
-- Kill **half the enemies** to open the cyan portal, then reach it to descend.
-- 3D monsters: 👹 **Imps** rush you, 👁 **Eye-demons** float back and spit orbs, **Ogres** (floor 3+) are slow and tough.
-- Four guns: Pistol, Shotgun, SMG and a piercing Railgun. Pick your starting gun and difficulty in the main menu.
-- 👹 **Every 5th floor is a boss floor**, with a huge enemy that fires triple spreads.
-- **Checkpoints:** two shrines per floor save your spot. After death you respawn at the last one (15% score penalty, 3 seconds of protection).
-- Kill streaks build a **combo multiplier**. Each floor has its own colour theme and wall-mounted torches.
-- **Perks:** clear a floor and pick 1 of 3 upgrades (damage, fire rate, max HP, life steal, ammo, speed).
-- **6 guns** (adds Grenade Launcher and Flamethrower), explosive barrels, **teleporter** and **splitter** monsters.
-- **Modes:** Normal, Hardcore (no respawns) and Daily (same dungeons for everyone). Includes a top-10 board, stats and achievements.
-- **Realism:** detailed gun models with moving parts, muzzle flash, ejected shells and per-gun synthesized sounds; animated monsters with walking limbs, jaws and wings that growl; footsteps, blood, a heartbeat at low health.
-- Pick up health, ammo and gems. The minimap fills in as you explore.
-- Your **best score** is saved in your browser.
+## Project layout
 
-## What's new
-
-See [CHANGELOG.md](CHANGELOG.md). v1.1 highlights: boss floors, saved high score, pause key, mouse capture, and a standalone web version you can host on GitHub Pages.
-
-## How it works
-
-- Maze generation with a recursive backtracker, extra loops and carved rooms
-- Grid collision, line-of-sight checks, BFS-style distance logic and hitscan shooting
-- Instanced wall meshes, procedural canvas textures, a flickering torch light
-- Web Audio sound effects (no audio files)
-
-## Project structure
-
-```
+```text
 depths-3d/
+├── .github/workflows/verify.yml   # lightweight build checks
+├── .gitignore
+├── .gitattributes
+├── .nojekyll
 ├── src/
-│   ├── game.js        # the whole game (Three.js)
-│   └── game.html      # HUD / overlay markup
-├── index.html         # standalone web page (generated)
-├── depths_3d.ipynb    # Colab notebook (generated)
-├── build.py           # regenerates index.html and the notebook from src/
+│   ├── game.js                     # single game source of truth
+│   ├── game.html                   # game root / interface markup
+│   ├── intro_art.webp
+│   └── menu_art.webp
+├── docs/menu-preview.png          # menu UI preview
+├── tests/                        # offline / browser regression scripts
+├── index.html                    # GitHub Pages entry point
+├── PLAY_DIRECTLY.html            # single-file desktop browser build
+├── depths_3d.ipynb               # self-contained Colab notebook
+├── colab_one_cell.py             # paste-in-Colab alternative
+├── build.py                      # regenerates the four distributions
+├── README.md
 ├── CHANGELOG.md
+├── RELEASE_NOTES.md
+├── UPDATE_LOCAL_REPO.md
+├── FEATURE_MATRIX.md
+├── TEST_REPORT.md
 └── LICENSE
 ```
 
-Edit files in `src/`, then run `python build.py` to rebuild `index.html` and `depths_3d.ipynb`.
+### Editing the game
 
-## Enable GitHub Pages
+Edit `src/game.js` and/or `src/game.html`. Then regenerate all platform entry points from the **same source**:
 
-1. Open the repo on GitHub → **Settings → Pages**.
-2. Under **Build and deployment**, choose **Deploy from a branch**.
-3. Select branch **main** and folder **/ (root)**, then **Save**.
-4. After a minute the game is live at `https://richwokello.github.io/depths-3d/`.
+```bash
+python build.py
+node --check src/game.js
+```
 
-## Author
+Commit all regenerated outputs (`index.html`, `PLAY_DIRECTLY.html`, `depths_3d.ipynb` and `colab_one_cell.py`) with the source. The included GitHub Actions workflow checks JavaScript syntax, notebook JSON, and whether generated outputs are in sync. It **does not** certify GPU rendering or sound quality.
 
-Created by **Richard Okello** ([@RichWOkello](https://github.com/RichWOkello)).
+## Updating the existing GitHub repository
 
-## License
+Follow **[UPDATE_LOCAL_REPO.md](UPDATE_LOCAL_REPO.md)** to copy the v5.0.0 files over an existing local clone of `RichWOkello/depths-3d`, review the changes and push to `main`. GitHub Pages is already configured in the existing repository, so no new repository is required.
 
-[MIT](LICENSE) © 2026 Richard Okello
+## Testing and limitations
+
+Gameplay/menu and combat tests were run in headless Chromium with a **simulated Three.js renderer**. Live WebGL visuals, Colab GPU/browser behavior, long-session frame rate, and real browser persistence still require hands-on verification. The implementation is not a photorealistic AAA game; not every feature in the original expansion brief is complete.
+
+- [Test report](TEST_REPORT.md)
+- [Feature matrix](FEATURE_MATRIX.md)
+- [Changelog](CHANGELOG.md)
+- [Release notes](RELEASE_NOTES.md)
+
+---
+
+Developed by **Richard Okello** · [@RichWOkello](https://github.com/RichWOkello) · Licensed under [MIT](LICENSE).

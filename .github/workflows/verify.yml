@@ -1,0 +1,25 @@
+name: Validate game build
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate JavaScript syntax
+        run: node --check src/game.js
+      - name: Regenerate web and Colab distributions
+        run: python build.py
+      - name: Validate notebook JSON
+        run: python -m json.tool depths_3d.ipynb > /dev/null
+      - name: Ensure generated files were committed
+        run: git diff --exit-code -- index.html PLAY_DIRECTLY.html depths_3d.ipynb colab_one_cell.py
