@@ -3,7 +3,7 @@
 A first-person 3D dungeon shooter built with **Three.js**. Play it in your browser, or run it inside **Google Colab**. Nothing to install.
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/RichWOkello/depths-3d/blob/main/depths_3d.ipynb)
-![version](https://img.shields.io/badge/version-3.1.0-blue)
+![version](https://img.shields.io/badge/version-4.0.0-blue)
 ![license](https://img.shields.io/badge/license-MIT-green)
 
 ## Play
@@ -41,6 +41,7 @@ A first-person 3D dungeon shooter built with **Three.js**. Play it in your brows
 - **Perks:** clear a floor and pick 1 of 3 upgrades (damage, fire rate, max HP, life steal, ammo, speed).
 - **6 guns** (adds Grenade Launcher and Flamethrower), explosive barrels, **teleporter** and **splitter** monsters.
 - **Modes:** Normal, Hardcore (no respawns) and Daily (same dungeons for everyone). Includes a top-10 board, stats and achievements.
+- **Realism:** detailed gun models with moving parts, muzzle flash, ejected shells and per-gun synthesized sounds; animated monsters with walking limbs, jaws and wings that growl; footsteps, blood, a heartbeat at low health.
 - Pick up health, ammo and gems. The minimap fills in as you explore.
 - Your **best score** is saved in your browser.
 

@@ -1,5 +1,18 @@
 # Changelog
 
+## [4.0.0] - 2026-11-06
+### Added
+- **Realistic guns:** new detailed models (1911-style pistol, pump shotgun, SMG with red-dot sight, coil railgun, revolving grenade launcher, flamethrower with fuel tanks) with working animation: slide, pump, charging handle and pulsing rail coils. Weapon sway, muzzle flash and ejected shell casings.
+- **Per-gun sounds:** every weapon has its own synthesized shot sound (sharp pistol crack, deep shotgun boom, snappy SMG, electric railgun zap, grenade thump, flame whoosh) and explosions rumble.
+- **Footsteps** that alternate left and right and speed up when sprinting. Heavy monsters stomp and shake the screen.
+- **Realistic monsters:** skin-textured models with walking arms and legs, snapping jaws with teeth, claws, tails, flapping wings, swaying tentacles and pulsing blobs. Monsters growl and pan in stereo.
+- **Blood** spurts and floor stains, and a heartbeat when your health is low.
+- **New XP crystal:** a faceted glowing gem with an orbiting sparkle ring.
+- **Grenade area explosion:** a big fireball with an expanding shockwave ring, scorch mark on the floor, smoke, knockback and a bright flash. Blast radius grew to 4.5 and chains barrels.
+- **Burning:** the flamethrower sets enemies on fire (damage over time, flames on their bodies, fire spreads to nearby enemies), and your screen glows with heat while you fire it.
+- **Cinematic menu:** animated background art (demon lord silhouette in front of a glowing portal, flickering torches, drifting fog, rising embers, crossed rifles), glass panels, hover effects, a pulsing PLAY button and key-cap controls.
+- **UI overhaul:** glass-style stat panel, weapon hotbar with icons, big ammo counter, health readout, hit markers, rounded minimap, and icons on menu and perk cards.
+
 ## [3.1.0] - 2026-11-06
 ### Fixed
 - Map rendering: walls could vanish or flicker when turning, because the instanced wall mesh was being frustum-culled. Culling is now disabled for it.
