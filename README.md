@@ -3,7 +3,7 @@
 A first-person 3D dungeon shooter built with **Three.js**. Play it in your browser, or run it inside **Google Colab**. Nothing to install.
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/RichWOkello/depths-3d/blob/main/depths_3d.ipynb)
-![version](https://img.shields.io/badge/version-3.0.0-blue)
+![version](https://img.shields.io/badge/version-3.1.0-blue)
 ![license](https://img.shields.io/badge/license-MIT-green)
 
 ## Play

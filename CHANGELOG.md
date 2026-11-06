@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.1.0] - 2026-11-06
+### Fixed
+- Map rendering: walls could vanish or flicker when turning, because the instanced wall mesh was being frustum-culled. Culling is now disabled for it.
+
+### Changed
+- **Pickup icons:** health is now a first-aid bag with a bandage roll, ammo is a cluster of brass bullets, each with a soft glow.
+- **Weapon projectiles:** pistol and SMG fire fast tracer bolts, the shotgun fires orange pellets, the railgun fires a thick cyan beam, the grenade launcher lobs a real grenade that explodes on landing, and the flamethrower spits growing fireballs.
+
 ## [3.0.0] - 2026-11-06
 ### Added
 - **Redesigned menu:** gradient title, Play / Stats / Settings tabs, weapon, difficulty and mode pickers.
