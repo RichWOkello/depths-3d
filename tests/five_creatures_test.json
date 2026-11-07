@@ -1,0 +1,114 @@
+{
+  "brute": {
+    "anatomy": "heavy dermis, stitched wounds, heavy shoulders",
+    "shell": true,
+    "nearDetails": 7,
+    "midDetails": 14,
+    "nearCount": 7,
+    "farHidden": true,
+    "sharedGeometry": true,
+    "finite": true,
+    "triangles": [
+      13724,
+      5140,
+      904
+    ],
+    "wings": 0,
+    "tail": 0,
+    "hasJaw": true,
+    "eyeCount": 2,
+    "disconnected": false,
+    "optimizedGeometryCache": 261
+  },
+  "crawler": {
+    "anatomy": "rib arches, exposed vertebrae, hooked teeth",
+    "shell": true,
+    "nearDetails": 22,
+    "midDetails": 26,
+    "nearCount": 22,
+    "farHidden": true,
+    "sharedGeometry": true,
+    "finite": true,
+    "triangles": [
+      13716,
+      4984,
+      868
+    ],
+    "wings": 0,
+    "tail": 0,
+    "hasJaw": true,
+    "eyeCount": 2,
+    "disconnected": false,
+    "optimizedGeometryCache": 148
+  },
+  "imp": {
+    "anatomy": "grossly oversized head, lip folds, orbital tissue",
+    "shell": true,
+    "nearDetails": 34,
+    "midDetails": 2,
+    "nearCount": 34,
+    "farHidden": true,
+    "sharedGeometry": true,
+    "finite": true,
+    "triangles": [
+      12176,
+      4580,
+      844
+    ],
+    "wings": 0,
+    "tail": 0,
+    "hasJaw": true,
+    "eyeCount": 2,
+    "disconnected": false,
+    "optimizedGeometryCache": 106
+  },
+  "wraith": {
+    "anatomy": "exposed rib cage, gaunt musculature, fragmented hood",
+    "shell": true,
+    "nearDetails": 6,
+    "midDetails": 16,
+    "nearCount": 6,
+    "farHidden": true,
+    "sharedGeometry": true,
+    "finite": true,
+    "triangles": [
+      11708,
+      4408,
+      612
+    ],
+    "wings": 0,
+    "tail": 0,
+    "hasJaw": true,
+    "eyeCount": 2,
+    "disconnected": false,
+    "optimizedGeometryCache": 114
+  },
+  "gargoyle": {
+    "anatomy": "beaked skull, horn ridges, scaly veins, flexible tail",
+    "shell": true,
+    "nearDetails": 24,
+    "midDetails": 18,
+    "nearCount": 24,
+    "farHidden": true,
+    "sharedGeometry": true,
+    "finite": true,
+    "triangles": [
+      11372,
+      4196,
+      840
+    ],
+    "wings": 2,
+    "tail": 6,
+    "hasJaw": true,
+    "eyeCount": 2,
+    "disconnected": false,
+    "optimizedGeometryCache": 154
+  },
+  "necromancer": {
+    "hood": true,
+    "robeLayers": 2,
+    "skulls": 3,
+    "wisps": 5,
+    "staff": true
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "build40Ms": 1347,
+  "updates4800Ms": 20,
+  "mockUpdateMsPerEntity": 0.0043,
+  "meshObjects40": 5276,
+  "firstLOD": {
+    "brute": {
+      "ms": 269,
+      "triangles": [
+        13724,
+        5140,
+        904
+      ]
+    },
+    "crawler": {
+      "ms": 209,
+      "triangles": [
+        13716,
+        4984,
+        868
+      ]
+    },
+    "imp": {
+      "ms": 113,
+      "triangles": [
+        12176,
+        4580,
+        844
+      ]
+    },
+    "wraith": {
+      "ms": 154,
+      "triangles": [
+        11708,
+        4408,
+        612
+      ]
+    },
+    "necromancer": {
+      "ms": 91,
+      "triangles": [
+        12540,
+        4664,
+        688
+      ]
+    },
+    "gargoyle": {
+      "ms": 206,
+      "triangles": [
+        11372,
+        4196,
+        840
+      ]
+    }
+  }
+}

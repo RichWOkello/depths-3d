@@ -37,11 +37,24 @@
  }
  class Texture extends Obj {constructor(){super();this.repeat={set(){}}} }
  const things={Vector3:Vec3,Color:Color,WebGLRenderer:Renderer,Shape:Shape,BufferAttribute:class{constructor(array,size){this.array=array;this.itemSize=size;this.needsUpdate=false;}},Float32BufferAttribute:class{constructor(array,size){this.array=array;this.itemSize=size;this.needsUpdate=false;}},
-   MeshStandardMaterial:Material,MeshPhysicalMaterial:Material,MeshBasicMaterial:Material,LineBasicMaterial:Material,SpriteMaterial:Material,
+   MeshStandardMaterial:Material,MeshPhysicalMaterial:Material,MeshBasicMaterial:Material,ShaderMaterial:Material,LineBasicMaterial:Material,SpriteMaterial:Material,
    CanvasTexture:Texture,InstancedMesh:class extends Obj{constructor(){super()}},
    Mesh:class extends Obj{constructor(geo,mat){super();this.geometry=geo;this.material=mat;this.userData={};this.isMesh=true;}},
    Sprite:class extends Obj{constructor(mat){super();this.material=mat;this.isSprite=true;}},
    SphereGeometry:class extends Obj{constructor(){super();this.attributes={position:{count:1,getX(){return 0},getY(){return 1},getZ(){return 0},setXYZ(){}}};}},
    Fog:class extends Obj{constructor(c){super();this.color=new Color(c)}}};
+
+ Obj.prototype.updateMatrixWorld=function(){};
+ Obj.prototype.bind=function(s){this.skeleton=s;};
+ things.Bone=class extends Obj{};
+ things.Skeleton=class extends Obj{constructor(bones){super();this.bones=bones;}calculateInverses(){}};
+ things.SkinnedMesh=class extends Obj{constructor(geo,mat){super();this.geometry=geo;this.material=mat;this.isMesh=true;}bind(s){this.skeleton=s;}};
+ things.LOD=class extends Obj{constructor(){super();this.levels=[];}addLevel(m,d){this.add(m);this.levels.push({object:m,distance:d});}};
+ things.BufferGeometry=class extends Obj{constructor(){super();this.attributes={};this.index={count:0};}setAttribute(n,v){this.attributes[n]=v;return this;}setIndex(i){this.index={count:i.length,array:i};return this;}computeBoundingSphere(){}};
+ things.Uint16BufferAttribute=class{constructor(array,size){this.array=Array.from(array);this.itemSize=size;this.count=array.length/size;}};
+ Vec3.prototype.addScaledVector=function(v,n){this.x+=v.x*n;this.y+=v.y*n;this.z+=v.z*n;return this;};
+ Vec3.prototype.dot=function(v){return this.x*v.x+this.y*v.y+this.z*v.z;};
+ Vec3.prototype.crossVectors=function(a,b){return this.set(a.y*b.z-a.z*b.y,a.z*b.x-a.x*b.z,a.x*b.y-a.y*b.x);};
+
  window.THREE=new Proxy(things,{get(target,name){if(name in target)return target[name];if(typeof name!=='string')return undefined;if(name.toUpperCase()===name)return 1;return class extends Obj{};}});
 })();

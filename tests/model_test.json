@@ -1,0 +1,92 @@
+[
+  {
+    "type": "brute",
+    "ms": 410,
+    "buildMs": 305,
+    "triangles": [
+      13724,
+      5140,
+      904
+    ],
+    "vertices": 38244,
+    "bones": 17,
+    "maxInfluences": 4,
+    "weightsValid": true,
+    "numberOfWings": 0
+  },
+  {
+    "type": "crawler",
+    "ms": 230,
+    "buildMs": 204,
+    "triangles": [
+      13716,
+      4984,
+      868
+    ],
+    "vertices": 38220,
+    "bones": 17,
+    "maxInfluences": 4,
+    "weightsValid": true,
+    "numberOfWings": 0
+  },
+  {
+    "type": "imp",
+    "ms": 126,
+    "buildMs": 84,
+    "triangles": [
+      12176,
+      4580,
+      844
+    ],
+    "vertices": 33600,
+    "bones": 17,
+    "maxInfluences": 4,
+    "weightsValid": true,
+    "numberOfWings": 0
+  },
+  {
+    "type": "wraith",
+    "ms": 80,
+    "buildMs": 62,
+    "triangles": [
+      11708,
+      4408,
+      612
+    ],
+    "vertices": 33660,
+    "bones": 17,
+    "maxInfluences": 4,
+    "weightsValid": true,
+    "numberOfWings": 0
+  },
+  {
+    "type": "necromancer",
+    "ms": 88,
+    "buildMs": 58,
+    "triangles": [
+      12540,
+      4664,
+      688
+    ],
+    "vertices": 36156,
+    "bones": 17,
+    "maxInfluences": 4,
+    "weightsValid": true,
+    "numberOfWings": 0
+  },
+  {
+    "type": "gargoyle",
+    "ms": 98,
+    "buildMs": 76,
+    "triangles": [
+      11372,
+      4196,
+      840
+    ],
+    "vertices": 31188,
+    "bones": 17,
+    "maxInfluences": 4,
+    "weightsValid": true,
+    "numberOfWings": 2
+  }
+]

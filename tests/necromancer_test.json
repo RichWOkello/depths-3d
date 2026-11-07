@@ -1,0 +1,80 @@
+{
+  "baseline": {
+    "robeLayers": 2,
+    "hood": true,
+    "face": true,
+    "staff": true,
+    "staffLight": true,
+    "runeGroups": 16,
+    "beltSkulls": 3,
+    "wanderingWisps": 5,
+    "orbHalo": true,
+    "boneCount": 17,
+    "mainSkinIndex": 36156,
+    "baselineRuneOpacity": 0.69,
+    "baselineStaffLight": null
+  },
+  "after": {
+    "runeOpacity": 0.7197481501136578,
+    "staffLight": 0.71269523935878,
+    "rightArmPitch": -1.23,
+    "leftArmPitch": 0.002750773757717845,
+    "spellScale": 1.2253904787175598,
+    "orbiters": 6
+  },
+  "afterIdle": {
+    "runeOpacity": 0.3840930513553211,
+    "staffLight": 0.2426312472998493,
+    "rightArmPitch": -0.28
+  },
+  "range": {
+    "brute": {
+      "built": true,
+      "triangles": [
+        13724,
+        5140,
+        904
+      ]
+    },
+    "crawler": {
+      "built": true,
+      "triangles": [
+        13716,
+        4984,
+        868
+      ]
+    },
+    "imp": {
+      "built": true,
+      "triangles": [
+        12176,
+        4580,
+        844
+      ]
+    },
+    "wraith": {
+      "built": true,
+      "triangles": [
+        11708,
+        4408,
+        612
+      ]
+    },
+    "necromancer": {
+      "built": true,
+      "triangles": [
+        12540,
+        4664,
+        688
+      ]
+    },
+    "gargoyle": {
+      "built": true,
+      "triangles": [
+        11372,
+        4196,
+        840
+      ]
+    }
+  }
+}

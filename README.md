@@ -1,120 +1,38 @@
-<div align="center">
+# Depths 3D v6.0.0 — The Bestiary Expansion
 
-# 🏰 Depths 3D
+**Browser-based dark-fantasy 3D dungeon shooter** · JavaScript / Three.js · By Richard Okello · 7 November 2026
 
-### The Abyssal Expansion · v5.0.0
+[**Play on GitHub Pages**](https://richwokello.github.io/depths-3d/) · [Source repository](https://github.com/RichWOkello/depths-3d)
 
-*A first-person dark-fantasy dungeon shooter built with Three.js.*
+This release consolidates the development work completed through 7 November 2026 into a **single v6.0.0 version**. The game is procedural and runs with Three.js loaded from a CDN, requiring internet access. GitHub Pages reflects this version **only after the files are pushed and deployed**.
 
-[![Version](https://img.shields.io/badge/version-5.0.0-D9B17A?style=flat-square)](CHANGELOG.md)
-[![License: MIT](https://img.shields.io/badge/license-MIT-3A8F75?style=flat-square)](LICENSE)
-[![GitHub Pages](https://img.shields.io/badge/play-GitHub%20Pages-242938?style=flat-square&logo=github)](https://richwokello.github.io/depths-3d/)
-[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/RichWOkello/depths-3d/blob/main/depths_3d.ipynb)
+## Gameplay
 
-**[Play in browser](https://richwokello.github.io/depths-3d/) · [Launch in Colab](https://colab.research.google.com/github/RichWOkello/depths-3d/blob/main/depths_3d.ipynb) · [Release notes](RELEASE_NOTES.md)**
+- First-person dungeon exploration, eight existing weapon slots, ranged and melee combat, relics and equipment.
+- Themed dungeon regions, portal vortex and rune objectives, bosses and difficulty modes.
+- Soul Forge perk selection and upgrade shop, progress saves, minimap, HUD and audio systems.
+- Six horror-style procedural enemies: **Flesh Brute, Crypt Crawler, Flesh Imp, Gaunt Hooded Wraith, Necromancer and Winged Gargoyle**.
+- The Necromancer has a detailed recessed skull, layered hood and robes, ornamented staff, casting wisps and magical effects.
+- The remaining creatures received a five-species reference-fidelity pass: facial structure, claws, body proportions, skeletal/rib details, wing geometry and textures.
 
-<img alt="Depths 3D cinematic main menu" src="docs/menu-preview.png" width="800" />
+## Run
 
-<sub>Menu UI preview captured during browser UI testing; in-game 3D graphics may differ.</sub>
+**Browser**: Open `PLAY_DIRECTLY.html` in Chrome or Edge, or launch a local HTTP server from the project root (`python -m http.server 8000`) and visit `http://localhost:8000`.
 
-</div>
+**Google Colab**: Open `depths_3d.ipynb`, connect a Python runtime and run the first code cell. It starts the game iframe. The optional viewer cell shows the reference comparison gallery. The notebook embeds readable HTML/JavaScript, not a compressed executable payload.
 
-## Enter the Abyss
+**Bestiary turntable**: Open `BESTIARY_VIEWER.html`. Drag to rotate; use the character buttons, animation modes and face comparison. The viewer includes embedded reference crops.
 
-Descend through procedurally generated Gothic cathedrals, crypts and forgotten sanctuaries. Fight increasingly dangerous creatures, upgrade your weapons, discover secrets and survive cinematic boss encounters.
-
-**Version 5.0.0** brings together the major combat, graphics, dungeon, AI, animation and menu improvements. The release keeps **eight playable weapon slots**, the existing campaign systems and a single source that builds for desktop browsers, GitHub Pages and Google Colab.
-
-## Play
-
-| Platform | How to start |
-| --- | --- |
-| **GitHub Pages** | **[Play here](https://richwokello.github.io/depths-3d/)**. This link will show v5.0.0 **after** the updated files are pushed to `main` and Pages finishes deploying. |
-| **Google Colab** | **[Open notebook](https://colab.research.google.com/github/RichWOkello/depths-3d/blob/main/depths_3d.ipynb)**. Run the game cell, then interact with the game iframe. |
-| **Standalone HTML** | Download this repository and open `PLAY_DIRECTLY.html` in Chrome or Edge. |
-| **Local server** | In the repository folder, run `python -m http.server 8000`, then visit `http://localhost:8000/`. |
-
-You need a WebGL-capable browser and an internet connection to load the pinned **Three.js r128** library. The game does not require a separate game engine installation. Music and sound start following a user interaction due to browser autoplay rules.
-
-## Features
-
-- **Eight weapons:** Desert Eagle, Remington 870, UMP9, AK-86, M79 grenade launcher, M2-style flamethrower, katana and Light Saber.
-- **Action combat:** projectiles, recoil, reloads, stamina-based melee, timed parry, slash trails, weak points and environmental effects.
-- **Dungeon exploration:** rotating Gothic environments, secret passages, environmental hazards, ritual switches, crypt keys, treasure and discoverable objectives.
-- **Enemies and bosses:** different monster behaviors, maze-aware navigation, telegraphed boss attacks and four named boss encounters.
-- **Progression:** upgrades, pickups, inventory, Soul Forge, checkpoints, 20-floor campaign, Survival and New Game+.
-- **Cinematic presentation:** animated intro, atmospheric artwork/audio, compact HUD, first-person hand/weapon models and uncluttered settings-driven menus.
-
-These are **procedural 3D graphics and synthesized sound**, not photogrammetry or professional motion capture. See [feature coverage](FEATURE_MATRIX.md) and the [testing report](TEST_REPORT.md) for what is implemented and verified.
+**Editing and rebuilding**: Edit `src/game_base.js` (game), `src/bestiary_pass.js` (creatures) or `src/game.html` (markup), then run `python -m pip install pillow nbformat` (first setup) and `python build.py` to regenerate `src/game.js`, `index.html`, `PLAY_DIRECTLY.html` and the notebook. Avoid directly editing generated `src/game.js` unless you also copy those changes back to the source modules.
 
 ## Controls
 
-| Input | Action | Input | Action |
-| --- | --- | --- | --- |
-| `W A S D` | Move | `Shift` | Sprint |
-| Mouse / `Q E` / arrows | Aim or turn | `1`–`8` / wheel | Switch weapons |
-| Left-click / `Space` / `F` | Fire or slash | `R` | Reload firearm |
-| `G` | Heavy melee strike | `T` | Melee thrust |
-| Hold `C` | Guard / timed parry | `V` | Charged saber wave |
-| `B` | AK fire mode | `Tab` | Weapon selection |
-| `I` | Inventory | `H` | Medkit |
-| `X` | Activate rune switch | `P` / `Esc` | Pause / resume |
+WASD movement, mouse look, Space/F attack, 1–8 weapons, R reload, E interact/portal, X rune switch, C guard, Esc pause, M map, N map orientation, `[ / ]` minimap zoom, L flashlight. See in-game menus for other actions.
 
-For other settings and controls, open **Settings → Controls** in the game.
+## Release status and limitations
 
-## Project layout
+**GitHub-ready release candidate**, not certified photorealistic or 60 FPS. The code is assembled, syntax-checked and subject to available automated simulation tests. Full browser/WebGL gameplay, real Colab GPU rendering, visual comparison against artwork and sustained 40-creature performance require actual-device testing. All six creatures remain procedural approximations rather than professionally sculpted/rigged GLB models. A GLB fallback path is exposed for future asset replacement.
 
-```text
-depths-3d/
-├── .github/workflows/verify.yml   # lightweight build checks
-├── .gitignore
-├── .gitattributes
-├── .nojekyll
-├── src/
-│   ├── game.js                     # single game source of truth
-│   ├── game.html                   # game root / interface markup
-│   ├── intro_art.webp
-│   └── menu_art.webp
-├── docs/menu-preview.png          # menu UI preview
-├── tests/                        # offline / browser regression scripts
-├── index.html                    # GitHub Pages entry point
-├── PLAY_DIRECTLY.html            # single-file desktop browser build
-├── depths_3d.ipynb               # self-contained Colab notebook
-├── colab_one_cell.py             # paste-in-Colab alternative
-├── build.py                      # regenerates the four distributions
-├── README.md
-├── CHANGELOG.md
-├── RELEASE_NOTES.md
-├── UPDATE_LOCAL_REPO.md
-├── FEATURE_MATRIX.md
-├── TEST_REPORT.md
-└── LICENSE
-```
+The repo-specific Git metadata is intentionally omitted. Copy these files **into your existing `depths-3d` working directory** without deleting its `.git` folder. Follow [UPDATE_LOCAL_REPO.md](UPDATE_LOCAL_REPO.md).
 
-### Editing the game
-
-Edit `src/game.js` and/or `src/game.html`. Then regenerate all platform entry points from the **same source**:
-
-```bash
-python build.py
-node --check src/game.js
-```
-
-Commit all regenerated outputs (`index.html`, `PLAY_DIRECTLY.html`, `depths_3d.ipynb` and `colab_one_cell.py`) with the source. The included GitHub Actions workflow checks JavaScript syntax, notebook JSON, and whether generated outputs are in sync. It **does not** certify GPU rendering or sound quality.
-
-## Updating the existing GitHub repository
-
-Follow **[UPDATE_LOCAL_REPO.md](UPDATE_LOCAL_REPO.md)** to copy the v5.0.0 files over an existing local clone of `RichWOkello/depths-3d`, review the changes and push to `main`. GitHub Pages is already configured in the existing repository, so no new repository is required.
-
-## Testing and limitations
-
-Gameplay/menu and combat tests were run in headless Chromium with a **simulated Three.js renderer**. Live WebGL visuals, Colab GPU/browser behavior, long-session frame rate, and real browser persistence still require hands-on verification. The implementation is not a photorealistic AAA game; not every feature in the original expansion brief is complete.
-
-- [Test report](TEST_REPORT.md)
-- [Feature matrix](FEATURE_MATRIX.md)
-- [Changelog](CHANGELOG.md)
-- [Release notes](RELEASE_NOTES.md)
-
----
-
-Developed by **Richard Okello** · [@RichWOkello](https://github.com/RichWOkello) · Licensed under [MIT](LICENSE).
+Read [RELEASE_NOTES.md](RELEASE_NOTES.md), [TEST_REPORT.md](TEST_REPORT.md) and [FEATURE_MATCH_REPORT.md](FEATURE_MATCH_REPORT.md) for coverage and known gaps. Original v5.2.0 notes are preserved under `docs/development_history_v5_2/`.

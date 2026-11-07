@@ -1,32 +1,32 @@
 # Changelog
 
-## [5.0.0] — 2026-11-06 · The Abyssal Expansion
+## [6.0.0] — 2026-11-07 — The Bestiary Expansion
 
-Major update from v4.0.0, combining the improvements developed through the v4.x and v5.0 development passes under one public **v5.0.0** release.
+**Consolidated major update** from the v5.0.0 base through the v5.1.0 development and v5.2.0 bestiary development passes. No intermediate releases are required to install this bundle.
 
-### Combat and weapon models
-- Expanded to eight weapon slots, including a katana and Light Saber alongside six real-world-inspired firearms and launchers.
-- Added simulated projectile movement, ballistic grenades, collision-based impacts, weapon recoil, reloads, weak points, burns, guard/parry, and distinct melee attacks.
-- Corrected the first-person katana and energy-saber models, one-hand hilt grips, camera stances, attack arcs, and gradual saber ignition.
-- Added layered explosions, flames, hit reactions, sound effects and attack trails.
+### Game and systems
+- Procedural swirling theme-colored portal gateway, seal/unseal phases, atmospheric effects and portal transitions.
+- Darker Infernal Sanctum palettes, procedural surface materials and improved dungeon atmosphere.
+- Stamina-aware directional dodge and blocking, equipment/relic bonuses, mastery progression and save-field compatibility.
+- Two-step perk selection and tabbed Soul Forge shop, minimap refinements, consolidated weapon/ammo HUD and icon set.
+- Viewmodel camera, revised weapon gripping and animation logic, procedurally generated music and effect updates.
 
-### Enemies and dungeons
-- Added varied monster archetypes, maze navigation, procedural grounded gait, detection/retreat/flanking behavior, and named multi-phase bosses.
-- Expanded the Gothic environments with stone architecture, stained glass, ossuaries, chained skeletons, pools, hazards, room set pieces, hidden passages and mechanisms.
-- Added keys, ritual switches and other exploration objectives in the campaign.
+### Six-monster bestiary
+- Flesh Brute: heavier anatomy, scarred jaw and roaring face, swollen torso, longer arms.
+- Crypt Crawler: spine and rib structure, skeletal muzzle, talons and low movement style.
+- Flesh Imp: oversized head, glossy eyes with pupil animation, asymmetric tissue and mouth details.
+- Gaunt Hooded Wraith: narrow anatomy, skull, torn shroud, gliding and teleport-related effects.
+- Necromancer: recessed skull and deep hood, layered ritual robes, rune-lit staff, skull ornaments and casting wisps.
+- Winged Gargoyle: horned beaked face, membrane wings, articulated tail and short aerial attacks.
+- Added comparison Bestiary Viewer and procedural-model GLB fallback.
 
-### Player systems and user interface
-- Added progression, equipment upgrades, inventory, Soul Forge, campaign saving, Survival mode and New Game+.
-- Reorganized the cinematic introduction, New Expedition / Continue navigation, Loadout, Records, Settings and pause interfaces into minimal dedicated screens.
-- Retained quick weapons, minimap, checkpoints and difficulty selection.
+### Compatibility and distribution
+- Updated gameplay version constant, menus, page titles, notebook launcher and release metadata to **v6.0.0**.
+- Rebuildable source and integrated standalone HTML, Colab and GitHub Pages outputs.
+- Existing v5.0.0 save schema compatibility intentionally preserved.
 
-### Cross-platform release
-- One canonical source in `src/game.js`, rebuilt into GitHub Pages `index.html`, standalone `PLAY_DIRECTLY.html`, and the self-contained Colab notebook.
-- Added professional README, release notes, update guide and build verification workflow for the existing GitHub repository.
+### Known limitations
+- Real WebGL and device FPS verification pending; not a photorealistic reference-image reconstruction.
+- Some visual controls and advanced mechanics have only simulation-level coverage.
 
-### Validation
-- See `TEST_REPORT.md` and `FEATURE_MATRIX.md`. Automated tests validate source behavior with simulated rendering; real hardware WebGL and Colab acceptance require manual testing.
-
-## Previous public releases
-
-Development before the v5.0.0 release included v4.0.0 and earlier versions. The detailed internal intermediate notes are archived in [docs/DEVELOPMENT_HISTORY.md](docs/DEVELOPMENT_HISTORY.md). Those intermediate build labels are not separate v5.x GitHub releases.
+See `docs/development_history_v5_2/CHANGELOG.md` for the archived development history.
